@@ -21,16 +21,46 @@ const types = document.getElementById("types");
 
 const fetchPokemons = () => {
   /*Fetch all pokemons here*/
+  fetch("https://pokeapi.co/api/v2/pokemon/")
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Could not fetch resource");
+      }
+      return response.json();
+    })
+    .then((data) => console.log(data.results)) // 2) a) As you can see, we get some metadata as well as
+    //    the results of the fetch. Change the console.log so
+    //    that you only log the array of pokemon objects.
+    .catch((error) => console.error(error));
 };
 
-// 2) a) As you can see, we get some metadata as well as
-//    the results of the fetch. Change the console.log so
-//    that you only log the array of pokemon objects.
+fetchPokemons();
 
 //    b) Log only the name of the first pokemon in the
 //    pokemon objects array
 
+const firstPokemon = () => {
+  fetch("https://pokeapi.co/api/v2/pokemon/")
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Could not fetch resource");
+      }
+      return response.json();
+    })
+    .then((data) => console.log(data.results[0].name));
+};
+
+firstPokemon();
+
 //    c) Log the names of all pokemons in the array
+
+function logPokemonNames(pokemonArray) {
+  pokemonArray.forEach((pokemon) => {
+    console.log("Pokemon Name:", pokemon.name);
+  });
+}
+
+fetchPokemons(logPokemonNames);
 
 // 3) You might know that there are more than 20 pokemons
 //    in the pokedex. Add a query parameter
@@ -39,15 +69,37 @@ const fetchPokemons = () => {
 //    and pick a pokemon that you would like to continue
 //    working with. Copy the pokemon's URL.
 
+https://pokeapi.co/api/v2/pokemon/2/ 
+
 // 4) Now that we've picked a pokemon, we will do a new fetch
 //    to the URL we copied. Since that's another endpoint,
 //    we will create a new fetch inside the fetchBulbasaurData
 //    function (change the function's name to fit your pokemon).
 //    Log the data in the console and see what you find.
 
-const fetchBulbasaurData = () => {
-  /*Fetch singular pokemon here*/
+const fetchIvysaurData = () => {
+  // Fetch data for Ivysaur
+  fetch("https://pokeapi.co/api/v2/pokemon/2/")
+    .then((response) => {
+      // Check if the response is successful
+      if (!response.ok) {
+        throw new Error("Could not fetch resource");
+      }
+      // Parse the JSON response
+      return response.json();
+    })
+    .then((data) => {
+      // Log the name of Ivysaur
+      console.log("Ivysaur's name:", data.name);
+    })
+    .catch((error) => {
+      // Log any errors that occur during the fetch
+      console.error("Error fetching Ivysaur's data:", error);
+    });
 };
+
+// Invoke the function to fetch Ivysaur's data
+fetchIvysaurData();
 
 // 5) After familiarizing with the data, we will use the data
 //    to change our table. We will give you the image as a start.
